@@ -27,28 +27,25 @@ function Leaderboard() {
             <h1 className='fc-white title'>{' >Leaderboard '}</h1>
             <div className='flex-col teams'>
             <h2 className='fc-white extrabold'>Teams</h2>
-            {cardData.map((index, data) => (
-             
-                <div class="card box" key={index}>
-                  <div class="card-body flex-row content">
-                    <p className='fc-white fs-300 medium'>{data.team_name}</p>
-                    <p className='fc-white fs-300 medium'>Votes: {data.votes}</p>
-                  </div>
-                </div>
-           
-            ))}
-            
-            
-                <div class="card box">
-                  <div class="card-body flex-row content">
-                    <p className='fc-white fs-300 medium'>Catty Cat</p>
-                    <p className='fc-white fs-300 medium'>Votes: 743</p>
-                  </div>
-                </div>
-                </div>
+            {cardData.map((index,data) => ( Card(index,data) ))}
+            </div>
         </div>
     </Wrapper>
   )
+}
+
+
+function Card(index , data ){
+
+  return (
+            <div className="card box" key={index}>
+              <div className="card-body flex-row content">
+                <p className='fc-white fs-300 medium'>{data.team_name}</p>
+                <p className='fc-white fs-300 medium'>Votes: {data.votes}</p>
+              </div>
+            </div>
+  )
+
 }
 
 export default Leaderboard
