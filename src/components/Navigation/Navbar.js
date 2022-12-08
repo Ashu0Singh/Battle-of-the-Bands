@@ -3,8 +3,6 @@ import React,{ useState } from 'react';
 import { Link } from 'react-router-dom';
 
 export default function Navbar(){
-
-    const [isLoggedIn , setIsLoggedIn] = useState(false);
     const [hamRotation , setHamRotation] = useState(
         { 
             width:"20px",
@@ -36,9 +34,11 @@ export default function Navbar(){
     return(
         <div className='navBar flex-col'>
             <div className='navBar-top flex-col'>
-                <h1 className='navBar-title fc-white fs-400 bold'>
-                    _prompt battle
-                </h1>
+                <Link to='/Prompt-Battle/'>
+                    <h1 className='navBar-title fc-white fs-400 bold'>
+                        _prompt battle
+                    </h1>
+                </Link>
                 <button className='navBar-hamB' onClick={hamburgerMenu}>
                     <img 
                         style={hamRotation}
@@ -48,7 +48,7 @@ export default function Navbar(){
                 </button>
             </div>
             <div style={hamB} className='navBar-hamMenu navBar-iconTray flex-col'>
-                    <Link to='/Prompt-Battle/Homepage'>
+                    <Link to='/Prompt-Battle/'>
                         <img className='navIcons' style={{ 
                                 width:"30px",
                                 height:"30px"

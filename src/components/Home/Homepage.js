@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Wrapper from "../Wrapper/Wrapper";
 import './Homepage.css'
 export default function Homepage(){
@@ -14,7 +15,10 @@ export default function Homepage(){
                 reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
                 pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
                 </p>
-                <button className='button fs-200 fc-white extrabold' style={{marginLeft: "0" , marginBottom: "0"}}><p style={{marginBottom: "0"}}>{'Enter the battle ->'}</p></button>
+
+                <Link to="/Prompt-Battle/">
+                    <button className='button fs-200 fc-white extrabold' style={{marginLeft: "0" , marginBottom: "0"}}><p style={{marginBottom: "0"}}>{'Enter the battle ->'}</p></button>
+                </Link>
             </div>
         </Wrapper>
     )

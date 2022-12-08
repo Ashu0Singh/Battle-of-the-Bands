@@ -1,3 +1,18 @@
+p {
+    margin-right: 1rem;
+}
+
+h3 {
+    margin: 0;
+}
+
+.scroll {
+    justify-content: center;
+    align-items: center;
+    margin-top: 1rem;
+    cursor: pointer;
+    margin-top: 2rem;
+}
 .login, .imgGen {
     width: 22rem; 
     border-radius: 10px;
@@ -6,6 +21,16 @@
     gap: 1rem;
     background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(4px);
+}
+.grid-box {
+    width: 315px;
+    height: 315px;
+    border: 1px solid #ffffff85;
+}
+
+.dropdown-ip {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: none;
 }
 
 .inputFeilds{

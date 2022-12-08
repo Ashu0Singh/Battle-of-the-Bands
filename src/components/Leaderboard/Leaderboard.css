@@ -1,0 +1,23 @@
+.teams {
+    justify-content: flex-start;
+    align-items: left;
+    margin-top: 2rem;
+    margin-left: 22rem;
+}
+
+.content {
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.content p {
+    margin: 0 2rem;
+}
+
+.box {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: 2px 2px 4px rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
+    margin-left: 3rem;
+    width: 33rem;
+}

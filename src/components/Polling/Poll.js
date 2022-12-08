@@ -1,11 +1,11 @@
 import React,{useState,useEffect} from "react";
 import './Poll.css'
-import Axios from 'axios';
+// import Axios from 'axios';
 import Wrapper from '../Wrapper/Wrapper'
 
 export default function Poll(){
-    const url = "http://3.6.65.227:8080/api/";
-    const [teamDetails , setTeamDetails] = useState({timeLeft : 100});
+    // const url = "http://3.6.65.227:8080/api/";
+    const [teamDetails , setTeamDetails] = useState({time : 100});
     const [timer , setTimer] = useState({second : 0, mins : 0});
 
     // Axios.get(url+"/polling").then(
@@ -13,24 +13,20 @@ export default function Poll(){
     //         setTeamDetails(response)
     //     }
     // );
+    useEffect(() => {
+        const timerfunc = () => {
+                                const timeLeft = teamDetails.time - 1;
+                                setTimer({
+                                    second: timeLeft % 60,
+                                    mins : Math.floor(timeLeft /60)
+                                });
+                                setTeamDetails({time : timeLeft});
+                                console.log(teamDetails);
+                            } 
 
-    // useEffect(() => {
-    //     const timer = () => {
-    //                             const timeLeft = teamDetails.timeLeft - 1;
-    //                             console.log(timeLeft);
-    //                             setTimer({
-    //                                 second: timeLeft % 60,
-    //                                 mins : Math.floor(timeLeft /60)
-    //                             });
-    //                             setTeamDetails({time : timeLeft});
-    //                             console.log(teamDetails);
-    //                         } 
-
-    //     setTimer(timer , 1000);
-    //     return clearInterval(timer , 1000);
-    //     });
-
-    console.log(Date.parse(Date.now()));
+        setInterval(timerfunc , 1000);
+        return clearInterval(timerfunc , 1000);
+    });
 
     const style  = {gap:"1rem" };
     return (

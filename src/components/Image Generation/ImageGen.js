@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react'
 import './ImageGen.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Wrapper from '../Wrapper/Wrapper'
 import axios from 'axios';
 
@@ -19,9 +20,6 @@ function GenerateImg() {
   const [info, setInfo] = useState(
     {
       prompt: "",
-      size: "",
-      number: 4,
-      url: "",
     }
   );
   const [selectedURL, setSelectedURL] = useState("");
@@ -29,6 +27,7 @@ function GenerateImg() {
 
   function handleChange({target :{ name , value}}){
       setInfo(prevValue => ({...prevValue,[name]:value}))
+      console.log(value);
   }
 
   const handleSubmit = (event) => {
@@ -36,7 +35,7 @@ function GenerateImg() {
 
     const url = "http://3.6.65.227:8080/api/submission";
     axios.post(url, {
-      url: info.url,
+      url: selectedURL,
     })
     .then(res => {
       console.log(res.data);
@@ -47,20 +46,6 @@ function GenerateImg() {
     const url = "http://3.6.65.227:8080/api/generate-image";
     axios.post(url, {
       prompt: info.prompt,
-      size: info.size,
-      number: info.number,
-    })
-    .then(res => {
-      console.log(res.data);
-    });
-  };
-
-  const generateVari = async () => {
-    const url = "http://3.6.65.227:8080/api/generate-variants";
-    axios.post(url, {
-      size: info.size,
-      number: info.number,
-      selectedURL: selectedURL,
     })
     .then(res => {
       console.log(res.data);
@@ -80,6 +65,23 @@ function GenerateImg() {
     fetchData();
   },[])
 
+  const DisplayImg = () => {
+    return (
+        <div className='flex-col borders'>
+          <div ref={displayImg} className='container text-center'>
+            <div class="row">
+              {imgURL.map((link, index) => (
+                <div class="col fc-white grid-box" key={index} onClick={(e) => setSelectedURL(e.target.src)}>
+                  <img src={link} alt='generated'></img>
+                </div>
+              ))}
+             
+            </div>
+          </div>
+        </div>
+    )
+  }
+
   return (
     <Wrapper>
       <div className='flex-col borders'>
@@ -88,74 +90,62 @@ function GenerateImg() {
           <form onSubmit={handleSubmit}>
 
 
-          <div class="form-floating">
+          <div class="form-floating mb-3">
             <textarea
                 className="form-control inputFeilds" 
-                placeholder="Enter your prompt here" 
+                placeholder="Enter your prompt here"
+                rows='5' 
+                col='5'
                 id="floatingTextarea"
                 name='prompt'
                 onChange={handleChange}
             >
             </textarea>
-            <label for="floatingTextarea">Comments</label>
+            <label for="floatingTextarea">Prompt</label>
           </div>
 
 
-          <div className="form-floating">
+          {/* <div className="form-floating mb-3">
               <input 
                   type="text" 
-                  id='floatingName' 
+                  id='floatingInput' 
                   onChange={handleChange} 
-                  className={`form-control inputFeilds`} 
+                  className='form-control inputFeilds'
                   placeholder="Vinay"
                   name='name'
-                  value={info.size}
+                  value={info.theme}
               />
-              <label htmlFor="floatingName">Name</label>
-          </div>
+              <label htmlFor="floatingName">Theme</label>
+          </div> */}
             
-            <div className='input-container'>
-              <label>Size</label>
-              <select class="form-select" value={info.size}>
+            {/* <div className='input-container'>
+              <label>Number of Images</label>
+              <select class="form-select">
                 <option value="1">1</option>
                 <option value="4">4</option>
               </select>
-              <input type='text' name='size' value={info.size} onChange={handleChange} />
-            </div>
+              <input type='text' className='dropdown-ip' name='size' value={info.number} onChange={handleChange} />
+            </div> */}
             
-            <div className='input-container'>
-              <label>Number</label>
-              <input type='number' name='number' maxLength='4' value={info.number} onChange={handleChange} />
-            </div>
             
-            <div>
-              <button className='form-btn button fs-200 fc-white extrabold' onClick={generateImg}>Generate</button>
-            </div>
 
-            <div>
-              <button className='form-btn button fs-200 fc-white extrabold' onClick={generateVari}>Get a Variant</button>
+            <div className='d-grid gap-2 mb-3'>
+              <button className='button fs-200 fc-white extrabold' onClick={generateImg}>Generate</button>
             </div>
             
-            <div className='input-container full-width'>
-              <label>URL</label>
-              <input type='text' name='url' value={info.url} onChange={handleChange} />
-            </div>
-            
-            <div className='full-width'>
-              <button className='form-btn button fs-200 fc-white extrabold'>Submit</button>
+            <div className='d-grid gap-2 mb-3'>
+              <button className='button fs-200 fc-white extrabold'>Submit</button>
             </div>
             
           </form>
         </div>
-
         <div className='scroll flex-col' onClick={() => scrollToSection(displayImg)}>
           <h3 className='fs-50 fc-white'>Scroll for Images</h3>
+          <h3 className='fs-50 fc-white'>v</h3>
         </div>
 
-        <div ref={displayImg}>
-          {console.log(selectedURL)}
+            <DisplayImg />
         </div>
-      </div>
     </Wrapper>
   )
 }
