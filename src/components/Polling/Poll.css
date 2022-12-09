@@ -12,6 +12,6 @@
 }
 
 .poll-displayimage{
-    width: clamp(320px,60vw,512px);
+    width: clamp(200px,60vw,206px);
     border-radius: 14px;
 }

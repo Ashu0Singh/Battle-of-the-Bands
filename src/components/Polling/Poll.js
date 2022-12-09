@@ -10,7 +10,7 @@ export default function Poll() {
   const [ID, setID] = useState([]);
   const [isVoted, setVoted] = useState(localStorage.getItem("isVoted"));
 
-  Axios.get("http://localhost:8080/api/polling").then((response) => {
+  Axios.get("http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/polling").then((response) => {
     setPollingState(response.data.isPollingStarted);
     if (response.data.isPollingStarted) {
       setCounter(response.data.time);

@@ -84,11 +84,7 @@ function GenerateImg() {
             </textarea>
             <label for="floatingTextarea">Prompt</label>
           </div>
-
-            
-            
-
-            <div class="d-grid gap-2">
+            <div className="d-grid mb-2">
               <button className='button fs-200 fc-white extrabold' onClick={generateImg}>Generate</button>
             </div>
             
