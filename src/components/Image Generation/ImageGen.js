@@ -24,7 +24,7 @@ function GenerateImg() {
 
   const handleSubmit = (selectedURL, id) => {
     const url =
-      "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/submission";
+      `${process.env.REACT_APP_URL}/api/submission`;
     axios
       .post(url, {
         id,
@@ -38,7 +38,7 @@ function GenerateImg() {
   const generateImg = async () => {
     setIsLoading("");
     const url =
-      "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/images/generations";
+    `${process.env.REACT_APP_URL}/api/images/generations`;
     await axios
       .post(url, {
         prompt: info.prompt,

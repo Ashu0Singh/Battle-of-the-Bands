@@ -9,10 +9,13 @@ function Leaderboard() {
   const getCardData = () => {
     axios
       .get(
-        "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/leaderboard"
+        `${process.env.REACT_APP_URL}/api/leaderboard`
       )
       .then((response) => {
-        setCardData(response.data);
+
+        const sortResponse = response.data.sort(
+          (teamA, teamB) => (teamA.votes < teamB.votes) ? 1 : (teamA.votes > teamB.votes) ? -1 : 0);
+        setCardData(sortResponse);
       })
 
       .catch((error) => console.log(error));

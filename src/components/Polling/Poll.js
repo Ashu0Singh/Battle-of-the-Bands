@@ -11,10 +11,10 @@ export default function Poll() {
   const getData = async () => {
     await axios.get("https://geolocation-db.com/json/").then(async (res) => {
       setIP(res.data.IPv4);
-
+      
       const options = {
         method: "POST",
-        url: "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/polling",
+        url: `${process.env.REACT_APP_URL}/api/polling`,
         headers: { "Content-Type": "application/json" },
         data: { ip: res.data.IPv4 },
       };
@@ -34,7 +34,7 @@ export default function Poll() {
     setUserVoted(true);
     const options = {
       method: "POST",
-      url: "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/votes",
+      url: `${process.env.REACT_APP_URL}/api/votes`,
       headers: { "Content-Type": "application/json" },
       data: { id: Userid, ip },
     };
