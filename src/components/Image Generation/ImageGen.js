@@ -56,8 +56,25 @@ function GenerateImg() {
   if (!(selectedURL === "")) {
     handleSubmit(selectedURL, teamId);
   }
+
+  if (teamId === undefined) {
+    return (
+      <Wrapper>
+        <div className="flex-col borders">
+          <h1 className="fc-white title">{" >Image Generation "}</h1>
+          <div
+            className="fs-400 fc-white extrabold flex-col poll"
+            style={{ height: "100%", justifyContent: "center" }}
+          >
+            Please contact the Event Managment Team for Login
+          </div>
+        </div>
+      </Wrapper>
+    );
+  }
   return (
     <Wrapper>
+      (
       {!isGenerated && (
         <div className="flex-col borders">
           <h1 className="fc-white title">{" >Image Generation "}</h1>
@@ -86,10 +103,10 @@ function GenerateImg() {
           </div>
         </div>
       )}
-
       {isGenerated && (
         <DisplayImg imgURL={imgURL} setSelectedURL={setSelectedURL} />
       )}
+      )
     </Wrapper>
   );
 }

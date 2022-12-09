@@ -16,6 +16,11 @@ function App() {
         />
         <Route
           exact
+          path="/Prompt-Battle/GenerateImage"
+          element={<GenerateImg />}
+        />
+        <Route
+          exact
           path="/Prompt-Battle/Leaderboard"
           element={<Leaderboard />}
         />
