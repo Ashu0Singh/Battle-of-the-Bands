@@ -1,17 +1,17 @@
 .poll {
-    align-items: center;
-    justify-content: space-around;
-    padding-bottom: 1rem;
-    gap: 1rem;
+  align-items: center;
+  justify-content: space-around;
+  padding-bottom: 1rem;
+  gap: 1rem;
 }
 
-@media (min-width: 65rem){
-    .poll{
-        flex-direction: row;
-    }
+@media (min-width: 65rem) {
+  .poll {
+    flex-direction: row;
+  }
 }
 
-.poll-displayimage{
-    width: clamp(200px,60vw,206px);
-    border-radius: 14px;
+.poll-displayimage {
+  width: clamp(320px, 60vw, 512px);
+  border-radius: 14px;
 }

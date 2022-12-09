@@ -10,7 +10,10 @@ export default function Poll() {
   const [ID, setID] = useState([]);
   const [isVoted, setVoted] = useState(localStorage.getItem("isVoted"));
 
-  Axios.get("http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/polling").then((response) => {
+  Axios.get(
+    "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/polling"
+  ).then((response) => {
+    // console.log(response.data);
     setPollingState(response.data.isPollingStarted);
     if (response.data.isPollingStarted) {
       setCounter(response.data.time);
@@ -27,7 +30,7 @@ export default function Poll() {
     localStorage.setItem("isVoted", true);
     const options = {
       method: "POST",
-      url: "http://localhost:8080/api/votes",
+      url: "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/votes",
       headers: { "Content-Type": "application/json" },
       data: { id: Userid },
     };

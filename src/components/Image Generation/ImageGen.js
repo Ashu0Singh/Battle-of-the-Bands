@@ -1,106 +1,100 @@
-import React, { useState, useRef, useEffect } from 'react'
-import './ImageGen.css'
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Wrapper from '../Wrapper/Wrapper'
-import axios from 'axios';
-import DisplayImg from '../DisplayImg/DisplayImg';
+import React, { useState } from "react";
+import "./ImageGen.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import Wrapper from "../Wrapper/Wrapper";
+import axios from "axios";
+import DisplayImg from "../DisplayImg/DisplayImg";
+import { useParams } from "react-router-dom";
 
 function GenerateImg() {
-
   const [isGenerated, setIsGenerated] = useState(false);
+  const { teamId } = useParams();
 
-  const [info, setInfo] = useState(
-    {
-      prompt: "",
-    }
-  );
+  const [info, setInfo] = useState({
+    prompt: "",
+  });
   const [selectedURL, setSelectedURL] = useState("");
   const [imgURL, setImgURL] = useState([]);
 
-  function handleChange({target :{ name , value}}){
-      setInfo(prevValue => ({...prevValue,[name]:value}))
-      console.log(value);
+  function handleChange({ target: { name, value } }) {
+    setInfo((prevValue) => ({ ...prevValue, [name]: value }));
+    console.log(value);
   }
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    const url = "http://3.6.65.227:8080/api/submission";
-    axios.post(url, {
-      url: selectedURL,
-    })
-    .then(res => {
-      console.log(res.data);
-    });
+  const handleSubmit = (selectedURL, id) => {
+    const url =
+      "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/submission";
+    axios
+      .post(url, {
+        id,
+        img: selectedURL,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
   };
 
   const generateImg = async () => {
-    const url = "http://3.6.65.227:8080/api/generate-image";
-    axios.post(url, {
-      prompt: info.prompt,
-    })
-    .then(res => {
-      console.log(res.data);
-    });
+    const url =
+      "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/images/generations";
+    await axios
+      .post(url, {
+        prompt: info.prompt,
+      })
+      .then((res) => {
+        if (!res.data.error) {
+          console.log(res.data.images.data);
+          setImgURL(res.data.images.data);
+        } else {
+          console.log("This Prompt Violate terms and condition of Dall e");
+        }
+      });
 
     setIsGenerated(true);
   };
 
-  async function fetchData() {
-    try {
-      const response = await axios.get("http://3.6.65.227:8080/generate-img")
-      setImgURL(imgURL => imgURL.concat(response.data))
-    } catch (error) {
-      console.error(error);
-    }
+  if (!(selectedURL === "")) {
+    handleSubmit(selectedURL, teamId);
   }
-
-  useEffect(() => {
-    fetchData();
-  },[])
-
-  
-
   return (
     <Wrapper>
       {!isGenerated && (
-        <div className='flex-col borders'>
-        <h1 className='fc-white title'>{' >Image Generation '}</h1>
-        <div className='flex-col fc-white imgGen'>
-          <form onSubmit={handleSubmit}>
-
-
-          <div class="form-floating mb-5">
-            <textarea
-                className="form-control inputFeilds" 
+        <div className="flex-col borders">
+          <h1 className="fc-white title">{" >Image Generation "}</h1>
+          <div className="flex-col fc-white imgGen">
+            <div className="form-floating mb-5">
+              <textarea
+                className="form-control inputFeilds"
                 placeholder="Enter your prompt here"
-                rows='5' 
-                col='10'
+                rows="5"
+                col="10"
                 charswidth="23"
                 id="floatingTextarea"
-                name='prompt'
+                name="prompt"
                 onChange={handleChange}
-            >
-            </textarea>
-            <label for="floatingTextarea">Prompt</label>
-          </div>
-            <div className="d-grid mb-2">
-              <button className='button fs-200 fc-white extrabold' onClick={generateImg}>Generate</button>
+              ></textarea>
+              <label for="floatingTextarea">Prompt</label>
             </div>
-            
-          </form>
-        </div>
+            <div className="d-grid mb-2">
+              <button
+                className="button fs-200 fc-white extrabold"
+                onClick={generateImg}
+              >
+                Generate
+              </button>
+            </div>
+          </div>
         </div>
       )}
-       
-      {isGenerated && <DisplayImg imgURL={imgURL} setSelectedURL={setSelectedURL} />}
-      
-      </Wrapper>
- 
-  )
+
+      {isGenerated && (
+        <DisplayImg imgURL={imgURL} setSelectedURL={setSelectedURL} />
+      )}
+    </Wrapper>
+  );
 }
 
-export default GenerateImg
+export default GenerateImg;
 
 /* 
 
