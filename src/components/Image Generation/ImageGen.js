@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 
 function GenerateImg() {
   const [isGenerated, setIsGenerated] = useState(false);
+  const [isLoading , setIsLoading] = useState('Submit')
   const { teamId } = useParams();
 
   const [info, setInfo] = useState({
@@ -35,6 +36,7 @@ function GenerateImg() {
   };
 
   const generateImg = async () => {
+    setIsLoading('');
     const url =
       "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/images/generations";
     await axios
@@ -51,6 +53,13 @@ function GenerateImg() {
       });
 
     setIsGenerated(true);
+
+    if(isGenerated){
+      setIsLoading('Submitted');
+}
+else{
+  setIsLoading('Retry');
+}
   };
 
   if (!(selectedURL === "")) {
@@ -92,14 +101,17 @@ function GenerateImg() {
               ></textarea>
               <label for="floatingTextarea">Prompt</label>
             </div>
-            <div className="d-grid mb-2">
+            {/* <div className="d-grid mb-2">
               <button
                 className="button fs-200 fc-white extrabold"
                 onClick={generateImg}
               >
                 Generate
               </button>
-            </div>
+            </div> */}
+            <button className='button fs-50 extrabold fc-white' onClick={generateImg}>
+              {isLoading === "" ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : isLoading}
+            </button>
           </div>
         </div>
       )}

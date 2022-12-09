@@ -1,8 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import Wrapper from "../Wrapper/Wrapper";
 import "./DisplayImg.css";
 
 function DisplayImg({ imgURL, setSelectedURL }) {
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  if(isSubmitted){
+    return (
+      
+        <div className="flex-col borders">
+          <h1 className="fc-white title">{" >Image Generation "}</h1>
+          <div
+            className="fs-400 fc-white extrabold flex-col poll"
+            style={{ height: "100%", justifyContent: "center" }}
+          >
+Thank you for submitting the image.          </div>
+        </div>
+    );
+  }
   return (
     // <Wrapper>
     <div className="flex-col borders">
@@ -18,13 +33,19 @@ function DisplayImg({ imgURL, setSelectedURL }) {
           <div className="grid">
             <a
               className="col-6 col-sm-12 grid-box"
-              onClick={() => setSelectedURL(imgURL[0].url)}
+              onClick={() =>{
+                setIsSubmitted(true)
+                setSelectedURL(imgURL[0].url)
+              } }
             >
               <img src={imgURL[0].url} />
             </a>
             <a
               className="col-6 col-sm-12 grid-box"
-              onClick={() => setSelectedURL(imgURL[1].url)}
+              onClick={() => {
+                setSelectedURL(imgURL[1].url)
+                setIsSubmitted(true)
+              }}
             >
               <img src={imgURL[1].url} />
             </a>
@@ -33,18 +54,25 @@ function DisplayImg({ imgURL, setSelectedURL }) {
           <div className="grid">
             <a
               className="col-6 col-sm-12 grid-box"
-              onClick={() => setSelectedURL(imgURL[2].url)}
+              onClick={() => {
+                setSelectedURL(imgURL[1].url)
+                setIsSubmitted(true)
+              }}
             >
               <img src={imgURL[2].url} />
             </a>
             <a
               className="col-6 col-sm-12 grid-box"
-              onClick={() => setSelectedURL(imgURL[3].url)}
+              onClick={() => {
+                setSelectedURL(imgURL[1].url)
+                setIsSubmitted(true)
+              }}
             >
               <img src={imgURL[3].url} />
             </a>
           </div>
         </div>
+        
       </div>
     </div>
   );
