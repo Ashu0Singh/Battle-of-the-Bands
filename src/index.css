@@ -28,15 +28,17 @@ html:focus-within {
 
 /* Set core body defaults */
 body {
-  min-height: 100vh;
+  /* min-height: 100%; */
   text-rendering: optimizeSpeed;
   line-height: 1.5;
   background-image: url("../public/assests/background/BackGroundMobile.jpg");
   font-family: 'JetBrains Mono', monospace !important;
-  background-repeat: no-repeat;
-  background-size: cover;
   backdrop-filter: blur(6px);
   overflow-y: scroll;
+  background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
 }
 
 @media (min-width: 35rem) {
@@ -162,7 +164,7 @@ body,
 }
 
 .container{
-  height: 100%;
+  height: 100vh;
   padding: 1rem 1rem;
 }
 
@@ -181,7 +183,7 @@ body,
 @media (min-width:35rem) {
   .borders {
     border: 1px solid #ffffff85;
-    height: 100vh;
+    height: 100%;
   }
   .wrapper {
     flex-direction: row;

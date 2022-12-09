@@ -22,11 +22,6 @@ h3 {
     background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(4px);
 }
-.grid-box {
-    width: 315px;
-    height: 315px;
-    border: 1px solid #ffffff85;
-}
 
 .dropdown-ip {
     background-color: rgba(0, 0, 0, 0.2);
@@ -38,6 +33,10 @@ h3 {
     background-color: transparent !important;
 }
 
+.form-btn{
+    padding: .5rem 2rem;
+    margin-top: 5rem;
+}
 
 label{
     color: white !important;
