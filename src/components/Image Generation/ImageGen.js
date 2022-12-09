@@ -3,10 +3,14 @@ import './ImageGen.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Wrapper from '../Wrapper/Wrapper'
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 function GenerateImg() {
 
   const displayImg = useRef(null);
+  const { teamId } = useParams();
+
+  console.log(teamId);
 
   const scrollToSection = (elementRef) => {
     window.scrollTo(

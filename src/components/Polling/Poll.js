@@ -49,7 +49,7 @@ export default function Poll() {
     return () => clearInterval(interval);
   }, []);
 
-  if (!(isPollingStarted == "true")) {
+  if (!(isPollingStarted === "true")) {
     localStorage.setItem("isVoted", false);
   }
 
