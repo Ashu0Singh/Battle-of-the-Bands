@@ -66,7 +66,10 @@ export default function Poll() {
     <Wrapper>
       <div className="flex-col borders" style={{ gap: "2rem" }}>
         <h1 className="fs-800 title fc-white extrabold">{">Polling"}</h1>
-        {data.isPollingStarted > 0 && !data.isVoted && !isuserVoted ? (
+        {data.isPollingStarted > 0 &&
+        !data.isVoted &&
+        !isuserVoted &&
+        counter > 0 ? (
           <div className="flex-col poll">
             <div className="flex-col" style={style}>
               <img
