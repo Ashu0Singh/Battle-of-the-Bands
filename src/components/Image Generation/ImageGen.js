@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 
 function GenerateImg() {
   const [isGenerated, setIsGenerated] = useState(false);
-  const [isLoading , setIsLoading] = useState('Submit')
+  const [isLoading, setIsLoading] = useState("Submit");
   const { teamId } = useParams();
 
   const [info, setInfo] = useState({
@@ -36,7 +36,7 @@ function GenerateImg() {
   };
 
   const generateImg = async () => {
-    setIsLoading('');
+    setIsLoading("");
     const url =
       "http://ec2-3-6-65-227.ap-south-1.compute.amazonaws.com:8080/api/images/generations";
     await axios
@@ -54,12 +54,11 @@ function GenerateImg() {
 
     setIsGenerated(true);
 
-    if(isGenerated){
-      setIsLoading('Submitted');
-}
-else{
-  setIsLoading('Retry');
-}
+    if (isGenerated) {
+      setIsLoading("Submitted");
+    } else {
+      setIsLoading("Retry");
+    }
   };
 
   if (!(selectedURL === "")) {
@@ -109,8 +108,23 @@ else{
                 Generate
               </button>
             </div> */}
-            <button className='button fs-50 extrabold fc-white' onClick={generateImg}>
-              {isLoading === "" ? <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> : isLoading}
+            <button
+              className="button fs-50 extrabold fc-white"
+              onClick={() => {
+                if (!(info.prompt === "")) {
+                  generateImg();
+                }
+              }}
+            >
+              {isLoading === "" ? (
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+              ) : (
+                isLoading
+              )}
             </button>
           </div>
         </div>

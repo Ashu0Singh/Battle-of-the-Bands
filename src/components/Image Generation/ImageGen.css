@@ -1,36 +1,37 @@
 p {
-    margin-right: 1rem;
+  margin-right: 1rem;
 }
 
 h3 {
-    margin: 0;
+  margin: 0;
 }
 
 .scroll {
-    justify-content: center;
-    align-items: center;
-    margin-top: 1rem;
-    cursor: pointer;
-    margin-top: 2rem;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  cursor: pointer;
+  margin-top: 2rem;
 }
 
 textarea {
-    min-height: 200px !important;
+  min-height: 200px !important;
 }
 
-.login, .imgGen {
-    width: 22rem; 
-    border-radius: 10px;
-    margin: 3rem auto 0;
-    padding: 3.5rem 1.5rem;
-    gap: 1rem;
-    background-color: rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(4px);
+.login,
+.imgGen {
+  width: 22rem;
+  border-radius: 10px;
+  margin: 3rem auto 0;
+  padding: 3.5rem 1.5rem;
+  gap: 1rem;
+  background-color: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
 }
 .grid-box {
-    width: 315px;
-    height: 315px;
-    border: 1px solid #ffffff85;
+  width: 315px;
+  height: 315px;
+  border: 1px solid #ffffff85;
 }
 
 /* .dropdown-ip {
@@ -43,21 +44,20 @@ textarea {
     border: none;
 } */
 
-.inputFeilds{
-    color: white !important;
-    background-color: transparent !important;
+.inputFeilds {
+  color: white !important;
+  background-color: transparent !important;
 }
 
-.form-btn{
-    padding: .5rem 2rem;
-    margin-top: 5rem;
+.form-btn {
+  padding: 0.5rem 2rem;
+  margin-top: 5rem;
 }
 
-label{
-    color: white !important;
+label {
+  color: white !important;
 }
 
 .imgGen {
-    width: 60%;
-    height: 70%;
+  width: 60%;
 }
