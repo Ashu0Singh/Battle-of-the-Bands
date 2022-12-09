@@ -5,7 +5,7 @@ import Wrapper from "../Wrapper/Wrapper";
 
 export default function Poll() {
   const [isPollingStarted, setPollingState] = useState(false);
-  const [counter, setCounter] = useState(10);
+  const [counter, setCounter] = useState(1);
   const [images, setImages] = useState([]);
   const [ID, setID] = useState([]);
   const [isVoted, setVoted] = useState(localStorage.getItem("isVoted"));
@@ -49,7 +49,7 @@ export default function Poll() {
     return () => clearInterval(interval);
   }, []);
 
-  if (!(isPollingStarted === "true")) {
+  if (counter < 0) {
     localStorage.setItem("isVoted", false);
   }
 
