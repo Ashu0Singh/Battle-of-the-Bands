@@ -22,6 +22,16 @@ h3 {
     background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(4px);
 }
+.grid-box {
+    width: 315px;
+    height: 315px;
+    border: 1px solid #ffffff85;
+}
+
+.dropdown-ip {
+    background-color: rgba(0, 0, 0, 0.2);
+    border: none;
+}
 
 .dropdown-ip {
     background-color: rgba(0, 0, 0, 0.2);

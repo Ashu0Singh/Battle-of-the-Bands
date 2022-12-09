@@ -1,6 +1,6 @@
+import { Link } from "react-router-dom";
 import Wrapper from "../Wrapper/Wrapper";
 import './Homepage.css'
-import { Link } from 'react-router-dom';
 
 export default function Homepage(){
     return (

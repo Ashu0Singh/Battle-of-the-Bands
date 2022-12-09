@@ -1,67 +1,111 @@
-import React,{useState,useEffect} from "react";
-import './Poll.css'
-import Axios from 'axios';
-import Wrapper from '../Wrapper/Wrapper'
+import React, { useState, useEffect } from "react";
+import "./Poll.css";
+import Axios from "axios";
+import Wrapper from "../Wrapper/Wrapper";
 
-export default function Poll(){
-    const url = "http://3.6.65.227:8080/api/";
-    const [teamDetails , setTeamDetails] = useState({timeLeft : 100});
-    const [timer , setTimer] = useState({second : 0, mins : 0});
+export default function Poll() {
+  const [isPollingStarted, setPollingState] = useState(false);
+  const [counter, setCounter] = useState(1);
+  const [images, setImages] = useState([]);
+  const [ID, setID] = useState([]);
+  const [isVoted, setVoted] = useState(localStorage.getItem("isVoted"));
 
-    // Axios.get(url+"/polling").then(
-    //     response => {
-    //         setTeamDetails(response)
-    //     }
-    // );
+  Axios.get("http://localhost:8080/api/polling").then((response) => {
+    setPollingState(response.data.isPollingStarted);
+    if (response.data.isPollingStarted) {
+      setCounter(response.data.time);
+      setImages([
+        response.data?.team[0]?.imageURL,
+        response.data?.team[1]?.imageURL,
+      ]);
+      setID([response.data?.team[0].id, response.data.team[1].id]);
+    }
+  });
 
-    // useEffect(() => {
-    //     const timer = () => {
-    //                             const timeLeft = teamDetails.timeLeft - 1;
-    //                             console.log(timeLeft);
-    //                             setTimer({
-    //                                 second: timeLeft % 60,
-    //                                 mins : Math.floor(timeLeft /60)
-    //                             });
-    //                             setTeamDetails({time : timeLeft});
-    //                             console.log(teamDetails);
-    //                         } 
+  const upVote = (Userid) => {
+    setVoted("true");
+    localStorage.setItem("isVoted", true);
+    const options = {
+      method: "POST",
+      url: "http://localhost:8080/api/votes",
+      headers: { "Content-Type": "application/json" },
+      data: { id: Userid },
+    };
 
-    //     setTimer(timer , 1000);
-    //     return clearInterval(timer , 1000);
-    //     });
+    Axios.request(options)
+      .then(function (response) {
+        console.log(response.data);
+      })
+      .catch(function (error) {
+        console.error(error);
+      });
+  };
 
-    console.log(Date.parse(Date.now()));
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prevCounter) => prevCounter - 1);
+    }, 1000);
 
-    const style  = {gap:"1rem" };
-    return (
-        <Wrapper >
-            
-            <div className="flex-col borders" style={{...style,gap:"2rem"}}>
-                <h1 className='fs-800 title fc-white extrabold'>{">Polling"}</h1>
-                {
-                teamDetails.time > 0 ?
-                    <div className="flex-col poll">
-                        <div className="flex-col" style={style}>
-                            <img 
-                                alt='generateImage'
-                                className='poll-displayimage'
-                                src={process.env.PUBLIC_URL + "/assests/capybara/Capybara-1.png"}
-                            />
-                            <button className='button fs-300 extrabold fc-white'>+1</button>
-                        </div>
-                        <h1 className='fs-600 extrabold fc-white'>{`${timer.mins} : ${timer.second}`}</h1>
-                        <div className="flex-col" style={style}>
-                            <img 
-                                alt='generateImage'
-                                className='poll-displayimage'
-                                src={process.env.PUBLIC_URL + "/assests/capybara/Capybara-2.png"}
-                            />
-                            <button className='button fs-300 extrabold fc-white'>+1</button>
-                        </div>
-                    </div>
-                    : <div className="fs-400 fc-white extrabold flex-col poll" style={{height:"100%", justifyContent:"center"}}> Polling will start in sometime </div>
-                }
+    return () => clearInterval(interval);
+  }, []);
+
+  if (counter < 0) {
+    localStorage.setItem("isVoted", false);
+  }
+
+  const style = { gap: "1rem" };
+  return (
+    <Wrapper>
+      <div className="flex-col borders" style={{ ...style, gap: "2rem" }}>
+        <h1 className="fs-800 title fc-white extrabold">{">Polling"}</h1>
+        {isPollingStarted > 0 && !(isVoted === "true") ? (
+          <div className="flex-col poll">
+            <div className="flex-col" style={style}>
+              <img
+                alt="generateImage"
+                className="poll-displayimage"
+                src={images[0]}
+              />
+              <button
+                className="button fs-300 extrabold fc-white"
+                onClick={() => upVote(ID[0])}
+              >
+                +1
+              </button>
             </div>
-        </Wrapper>
-    );
+            <h1 className="fs-600 extrabold fc-white">{` ${Math.floor(
+              counter / 60
+            )} : ${counter % 60}`}</h1>
+            <div className="flex-col" style={style}>
+              <img
+                alt="generateImage"
+                className="poll-displayimage"
+                src={images[1]}
+              />
+              <button
+                className="button fs-300 extrabold fc-white"
+                onClick={() => upVote(ID[1])}
+              >
+                +1
+              </button>
+            </div>
+          </div>
+        ) : isVoted === "true" ? (
+          <div
+            className="fs-400 fc-white extrabold flex-col poll"
+            style={{ height: "100%", justifyContent: "center" }}
+          >
+            Thank You For Voting
+          </div>
+        ) : (
+          <div
+            className="fs-400 fc-white extrabold flex-col poll"
+            style={{ height: "100%", justifyContent: "center" }}
+          >
+            Polling will start in sometime
+          </div>
+        )}
+      </div>
+    </Wrapper>
+  );
 }
