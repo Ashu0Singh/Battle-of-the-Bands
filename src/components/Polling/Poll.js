@@ -10,39 +10,27 @@ export default function Poll() {
   const [counter, setCounter] = useState([]);
   const [ip, setIP] = useState();
   const [isuserVoted, setUserVoted] = useState(false);
+  
   const getData = async () => {
-    await axios.get("https://geolocation-db.com/json/").then(async (res) => {
+    const res = await axios.get('https://geolocation-db.com/json/');
+    console.log(res.data);
       setIP(res.data.IPv4);
-
-      const options = {
-        method: "POST",
-        url: `${process.env.REACT_APP_URL}/api/polling`,
-        headers: { "Content-Type": "application/json" },
-        data: { ip: res.data.IPv4 },
-      };
-
-      await axios
-        .request(options)
-        .then(function (response) {
+      await axios.post(
+        `${process.env.REACT_APP_URL}/api/polling`,
+          { ip: res.data.IPv4 }
+      ).then(function (response) {
           setData(response.data);
           setCounter(response.data.time);
         })
         .catch(function (error) {
           console.error(error);
         });
-    });
   };
   const upVote = (Userid) => {
     setUserVoted(true);
-    const options = {
-      method: "POST",
-      url: `${process.env.REACT_APP_URL}/api/votes`,
-      headers: { "Content-Type": "application/json" },
-      data: { id: Userid, ip },
-    };
-
-    axios
-      .request(options)
+    axios.post(
+      `${process.env.REACT_APP_URL}/api/votes`,
+      { id: Userid, ip })
       .then(function (response) {
         console.log(response.data);
       })
