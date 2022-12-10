@@ -1,38 +1,48 @@
+
+
 import React, { useState, useEffect } from "react";
 import "./Poll.css";
-import Axios from "axios";
+import axios from "axios";
 import Wrapper from "../Wrapper/Wrapper";
 
 export default function Poll() {
-  const [isPollingStarted, setPollingState] = useState(false);
-  const [counter, setCounter] = useState(10);
-  const [images, setImages] = useState([]);
-  const [ID, setID] = useState([]);
-  const [isVoted, setVoted] = useState(localStorage.getItem("isVoted"));
+  const [data, setData] = useState([]);
+  const [counter, setCounter] = useState([]);
+  const [ip, setIP] = useState();
+  const [isuserVoted, setUserVoted] = useState(false);
+  const getData = async () => {
+    await axios.get("https://geolocation-db.com/json/").then(async (res) => {
+      setIP(res.data.IPv4);
 
-  Axios.get(`${process.env.REACT_APP_URL}/api/polling`).then((response) => {
-    setPollingState(response.data.isPollingStarted);
-    if (response.data.isPollingStarted) {
-      setCounter(response.data.time);
-      setImages([
-        response.data?.team[0]?.imageURL,
-        response.data?.team[1]?.imageURL,
-      ]);
-      setID([response.data?.team[0].id, response.data.team[1].id]);
-    }
-  });
+      const options = {
+        method: "POST",
+        url: `${process.env.REACT_APP_URL}/api/polling`,
+        headers: { "Content-Type": "application/json" },
+        data: { ip: res.data.IPv4 },
+      };
 
+      await axios
+        .request(options)
+        .then(function (response) {
+          setData(response.data);
+          setCounter(response.data.time);
+        })
+        .catch(function (error) {
+          console.error(error);
+        });
+    });
+  };
   const upVote = (Userid) => {
-    setVoted("true");
-    localStorage.setItem("isVoted", true);
+    setUserVoted(true);
     const options = {
       method: "POST",
-      url:`${process.env.REACT_APP_URL}/api/votes`,
+      url: `${process.env.REACT_APP_URL}/api/votes`,
       headers: { "Content-Type": "application/json" },
-      data: { id: Userid },
+      data: { id: Userid, ip },
     };
 
-    Axios.request(options)
+    axios
+      .request(options)
       .then(function (response) {
         console.log(response.data);
       })
@@ -42,6 +52,8 @@ export default function Poll() {
   };
 
   useEffect(() => {
+    getData();
+
     const interval = setInterval(() => {
       setCounter((prevCounter) => prevCounter - 1);
     }, 1000);
@@ -49,26 +61,27 @@ export default function Poll() {
     return () => clearInterval(interval);
   }, []);
 
-  if (!(isPollingStarted === "true")) {
-    localStorage.setItem("isVoted", false);
-  }
-
   const style = { gap: "1rem" };
+
+  console.log(data);
   return (
     <Wrapper>
-      <div className="flex-col borders" style={{ ...style, gap: "2rem" }}>
+      <div className="flex-col borders" style={{ gap: "2rem" }}>
         <h1 className="fs-800 title fc-white extrabold">{">Polling"}</h1>
-        {isPollingStarted > 0 && !(isVoted === "true") ? (
+        {data.isPollingStarted > 0 &&
+        !data.isVoted &&
+        !isuserVoted &&
+        counter > 0 ? (
           <div className="flex-col poll">
             <div className="flex-col" style={style}>
               <img
                 alt="generateImage"
                 className="poll-displayimage"
-                src={images[0]}
+                src={data.team[0].imageURL}
               />
               <button
                 className="button fs-300 extrabold fc-white"
-                onClick={() => upVote(ID[0])}
+                onClick={() => upVote(data.team[0].id)}
               >
                 +1
               </button>
@@ -80,17 +93,17 @@ export default function Poll() {
               <img
                 alt="generateImage"
                 className="poll-displayimage"
-                src={images[1]}
+                src={data.team[1].imageURL}
               />
               <button
                 className="button fs-300 extrabold fc-white"
-                onClick={() => upVote(ID[1])}
+                onClick={() => upVote(data.team[1].id)}
               >
                 +1
               </button>
             </div>
           </div>
-        ) : isVoted === "true" ? (
+        ) : data.isVoted || isuserVoted ? (
           <div
             className="fs-400 fc-white extrabold flex-col poll"
             style={{ height: "100%", justifyContent: "center" }}
