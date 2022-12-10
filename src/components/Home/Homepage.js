@@ -7,15 +7,19 @@ export default function Homepage(){
         <Wrapper>
             <div className="home borders flex-col fc-white">
                 <h1 className='fs-800 extrabold'>Battle<br/> of the Bands</h1>
-                <p className='fs-400 medium'>An AI prompt battle</p>
+                <h3 className='fs-400 medium'>An AI prompt battle</h3>
                 <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-                sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
-                nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in 
-                reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla 
-                pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    Battle of the Bands is a live event where bands go head-to-head and demonstrate
+                    their prompt design skills using text-to-image software in 5 rounds of enthralling
+                    creations. 
                 </p>
+                <h3>Event Details</h3>
+                <p>- Using an AI-supported text-to-image software, DALL-E 2, we enable users to
+generate new complex photos, images, and illustrations out of thin air by typing in
+image descriptions, so-called prompts</p>
+                <p>- Explore the new creative frontiers opened up by generative AI and leverage it to
+add creative agency to how you create. Over the course of this event, we will be
+showcasing insights and art from an exciting roster of artists and builders</p>
                 <Link to='/Prompt-Battle/GenerateImage'>
 
                 <button className='button fs-200 fc-white extrabold' style={{marginLeft: "0" , marginBottom: "0"}}><p style={{marginBottom: "0"}}>{'Enter the battle ->'}</p></button>
